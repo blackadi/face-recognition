@@ -6,11 +6,8 @@
   "scripts": {
     "server": "npm run dev --prefix face_api",
     "client": "npm run dev --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "npm run server & npm run client"
   },
   "author": "blackadi",
-  "license": "ISC",
-  "dependencies": {
-    "concurrently": "3.5.0"
-  }
+  "license": "ISC"
 }
