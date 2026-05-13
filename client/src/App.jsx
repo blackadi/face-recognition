@@ -17,6 +17,8 @@ const IMAGE_URL_TEST = [
 ];
 
 function App() {
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
   const [imageUrl, setImageUrl] = useState("");
   const [faces, setFaces] = useState([]);
   const [displaySize, setDisplaySize] = useState({
@@ -41,20 +43,18 @@ function App() {
   const imgRef = useRef(null);
 
   async function fetchData() {
-    const request = await fetch("http://localhost:3000");
+    const request = await fetch(`${apiUrl}`);
     const face_data = await request.json();
     console.log(face_data);
   }
 
   const loadUser = (user) => {
     setUser({
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        entries: user.entries,
-        joined: user.joined,
-      },
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      entries: user.entries,
+      joined: user.joined,
     });
   };
 
@@ -101,10 +101,23 @@ function App() {
     setImageUrl(event.target.value);
   };
 
-  const onButtonSubmit = async (event) => {
+  const onPictureSubmit = async (event) => {
     const data = await callFaceAPI(imageUrl);
     const boxFaces = calculateFacesLocations(data);
-    console.log("boxFaces", boxFaces);
+    const entriesCount = await fetch(`${apiUrl}/image`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: user.id,
+      }),
+    });
+    const entries = await entriesCount.json();
+    setUser((prevUser) => ({
+      ...prevUser,
+      entries: entries,
+    }));
     setFaces(boxFaces);
   };
 
@@ -128,7 +141,7 @@ function App() {
             <Rank name={user.name} entries={user.entries} />
             <ImageLinkForm
               onInputChange={onInputChange}
-              onButtonSubmit={onButtonSubmit}
+              onPictureSubmit={onPictureSubmit}
             />
             <FaceRecognition
               faces={faces}

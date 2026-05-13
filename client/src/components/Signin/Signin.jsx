@@ -20,7 +20,8 @@ const Signin = ({ onRouteChange, loadUser }) => {
       }),
     });
     const data = await response.json();
-    if (data.status === 200 && data.id) {
+
+    if (data.id) {
       loadUser(data);
       onRouteChange("home");
     }

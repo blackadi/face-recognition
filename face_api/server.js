@@ -63,7 +63,7 @@ app.get("/profile/:id", (req, res) => {
   res.json("TEST!!!");
 });
 
-app.patch("/image", (req, res) => {
+app.put("/image", (req, res) => {
   const { id } = req.body;
 
   let found = false;
