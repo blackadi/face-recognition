@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: my_postgres_db # Name of the container
+    restart: always # Restart the container if it stops
+    environment:
+      # These variables initialize the DB on the first run
+      POSTGRES_USER: blackadi # This is the username for the database
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: blackadi_database # This is the name of the database that will be created on the first run -- you can change it as needed
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
