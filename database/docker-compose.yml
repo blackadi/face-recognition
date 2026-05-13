@@ -5,13 +5,14 @@ services:
     restart: always # Restart the container if it stops
     environment:
       # These variables initialize the DB on the first run
-      POSTGRES_USER: blackadi # This is the username for the database
-      POSTGRES_PASSWORD: mysecretpassword
-      POSTGRES_DB: blackadi_database # This is the name of the database that will be created on the first run -- you can change it as needed
+      POSTGRES_USER: admin # This is the username for the database
+      POSTGRES_PASSWORD: Test1234 # This is the password for the database
+      POSTGRES_DB: face-recognition # This is the name of the database that will be created on the first run -- you can change it as needed
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # This will run the SQL file on the first run to initialize the database
 
 volumes:
   postgres_data:
