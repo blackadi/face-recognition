@@ -18,19 +18,34 @@ A full-stack face recognition project with:
    docker compose up -d
    ```
 
-2. Start the backend API:
+2. Install dependencies:
    ```sh
-   cd face_api
    npm install
+   ```
+
+3. Start backend only:
+   ```sh
+   npm run server
+   ```
+
+4. Start frontend only:
+   ```sh
+   npm run client
+   ```
+
+5. Start both frontend and backend together:
+   ```sh
    npm run dev
    ```
 
-3. Start the frontend app:
-   ```sh
-   cd client
-   npm install
-   npm run dev
-   ```
+## Root package scripts
+
+- `npm run install-client` — install frontend dependencies
+- `npm run install-server` — install backend dependencies
+- `npm run install` — install both frontend and backend
+- `npm run server` — start backend in watch mode
+- `npm run client` — start frontend in dev mode
+- `npm run dev` — start both backend and frontend in parallel
 
 ## Notes
 - Backend API is expected at `http://localhost:3000`

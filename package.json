@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "install-client": "npm install --prefix client",
-    "install-server": "npm install --prefix server",
+    "install-server": "npm install --prefix face_api",
     "install": "npm run install-client && npm run install-server",
     "server": "npm run dev --prefix face_api",
     "client": "npm run dev --prefix client",
