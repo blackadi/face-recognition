@@ -68,6 +68,21 @@ import { myApiCall } from "../utils/authService";
 const data = await myApiCall(payload);
 ```
 
+### I want to add client-side validation
+Use the pattern from `registerUser` in `authService.js`:
+```javascript
+// Email validation
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!emailRegex.test(email)) {
+  throw new Error("Invalid email format");
+}
+
+// Password strength
+if (password.length < 6) {
+  throw new Error("Password must be at least 6 characters long");
+}
+```
+
 ### I want to create a custom hook
 1. Create `src/hooks/useMyHook.js`
 2. Follow the pattern from `useFaceDetection.js`

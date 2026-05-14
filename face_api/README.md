@@ -8,6 +8,25 @@ This is the backend API for the Face Recognition project.
 - Tracks user entry counts
 - Calls Face++ for face detection via `/api/v1/face/detect`
 
+## How It Works
+
+### User Management
+- **Registration**: Creates new user with hashed password using bcrypt
+- **Sign In**: Verifies email/password, returns user data without password
+- **Profile**: Retrieves user data by ID
+- **Entry Updates**: Increments user's image processing count
+
+### Face Detection
+- **API Integration**: Forwards image URLs to Face++ API
+- **Response Processing**: Parses face detection results (bounding boxes, attributes)
+- **Error Handling**: Manages API failures and invalid responses
+
+### Architecture
+- **Express Server**: REST API with middleware (CORS, Morgan logging)
+- **Sequelize ORM**: Database operations abstracted from HTTP handling
+- **Route Separation**: Modular routing with controllers for business logic
+- **Environment Config**: Sensitive data via .env files
+
 ## Quick start
 
 ```sh

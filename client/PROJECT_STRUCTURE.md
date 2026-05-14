@@ -84,9 +84,14 @@ Existing components (no changes needed):
 
 ### `src/utils/` - Utility Functions
 - **authService.js** - Authentication API calls
-  - `signInUser(email, password)`
-  - `registerUser(name, email, password)`
-  - `updateUserEntries(userId)`
+  - `signInUser(email, password)` - Signs in user
+  - `registerUser(name, email, password)` - Registers new user with client-side validation
+  - `updateUserEntries(userId)` - Updates user entry count
+
+### Client-Side Validation
+- **Email Format**: Regex validation `^[^\s@]+@[^\s@]+\.[^\s@]+$`
+- **Password Strength**: Minimum 6 characters
+- **Error Handling**: Throws descriptive errors before API calls
 
 ### Root Files
 - **main.jsx** - Application entry point

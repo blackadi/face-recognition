@@ -10,6 +10,21 @@ A full-stack face recognition project with:
 - `face_api/` — Express backend API
 - `database/` — PostgreSQL Docker compose and initialization scripts
 
+## How It Works
+
+### User Flow
+1. **Registration/Sign-in**: Users create accounts or sign in via the React frontend
+2. **Face Detection**: Authenticated users submit image URLs for face detection
+3. **API Processing**: Backend calls Face++ API to detect faces and attributes
+4. **Results Display**: Frontend displays bounding boxes and face attributes
+5. **Entry Tracking**: User entry counts are updated and stored in PostgreSQL
+
+### Architecture
+- **Frontend**: React SPA with routing, hooks, and context for state management
+- **Backend**: REST API with user authentication and face detection endpoints
+- **Database**: PostgreSQL with Sequelize ORM for data persistence
+- **External API**: Face++ for computer vision face detection
+
 ## Quick start
 
 1. Start the database:
@@ -56,6 +71,8 @@ A full-stack face recognition project with:
 - `client/README.md` — frontend app documentation
 - `client/PROJECT_STRUCTURE.md` — frontend directory and architecture guide
 - `client/DEVELOPER_GUIDE.md` — frontend developer reference
+- `database/README.md` — database setup guide
+- `face_api/README.md` — backend API documentation
 - `database/docker-compose.yml` — database service definition
 - `face_api/src/config/database.js` — backend DB connection
 - `face_api/src/routes/` — backend API route definitions
