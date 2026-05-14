@@ -9,7 +9,7 @@ const Signin = ({ onRouteChange, loadUser }) => {
   const onPasswordChange = (event) => setSignInPassword(event.target.value);
 
   const onSubmitSignIn = async () => {
-    const response = await fetch("http://localhost:3000/signin", {
+    const response = await fetch("http://localhost:3000/api/v1/users/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,11 +19,17 @@ const Signin = ({ onRouteChange, loadUser }) => {
         password: signInPassword,
       }),
     });
-    const data = await response.json();
+    const user = await response.json();
 
-    if (data.id) {
-      loadUser(data);
+    if (user.id) {
+      loadUser(user);
       onRouteChange("home");
+    } else {
+      // Display error message
+      const errorMessageElement = document.getElementById("error-message");
+      const errorTextElement = document.getElementById("error-text");
+      errorTextElement.textContent = "Invalid email or password";
+      errorMessageElement.hidden = false;
     }
   };
 
@@ -75,6 +81,10 @@ const Signin = ({ onRouteChange, loadUser }) => {
                 Register
               </p>
             </div>
+          </div>
+          {/* Add error element display here if needed */}
+          <div id="error-message" className="mt3 red" hidden>
+            <p id="error-text"></p>
           </div>
         </main>
       </article>

@@ -1,4 +1,9 @@
-function Navigation({ onRouteChange, isSignedIn }) {
+import { useUser } from "../../hooks/useUser";
+
+function Navigation({ onRouteChange }) {
+  const { user } = useUser();
+  const isSignedIn = !!user.id;
+
   if (isSignedIn) {
     return (
       <nav style={{ display: "flex", justifyContent: "flex-end" }}>

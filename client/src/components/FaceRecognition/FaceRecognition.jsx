@@ -1,6 +1,12 @@
 import "./FaceRecognition.css";
 
-function FaceRecognition({ faces, imageUrl, handleImageLoad, imgRef }) {
+function FaceRecognition({
+  faces,
+  imageUrl,
+  handleImageLoad,
+  imgRef,
+  faceAttributes,
+}) {
   return (
     <>
       <div
@@ -31,7 +37,10 @@ function FaceRecognition({ faces, imageUrl, handleImageLoad, imgRef }) {
                     height: `${face.height}px`,
                   }}
                 >
-                  <div className="face-lable">Face {index + 1}</div>
+                  <div className="face-lable">
+                    Face {index + 1}: {faceAttributes[index]?.age} years,{" "}
+                    {faceAttributes[index]?.gender}
+                  </div>
                 </div>
               );
             })}

@@ -12,21 +12,29 @@ const Register = ({ onRouteChange, loadUser }) => {
   const onPasswordChange = (event) => setPassword(event.target.value);
 
   const onSubmitRegister = async () => {
-    const response = await fetch("http://localhost:3000/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "http://localhost:3000/api/v1/users/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          name,
+        }),
       },
-      body: JSON.stringify({
-        email,
-        password,
-        name,
-      }),
-    });
-    const data = await response.json();
-    if (data) {
-      loadUser(data);
+    );
+    const user = await response.json();
+    if (user.id) {
+      loadUser(user);
       onRouteChange("home");
+    } else {
+      const errorMessageElement = document.getElementById("error-message");
+      const errorTextElement = document.getElementById("error-text");
+      errorTextElement.textContent = "Registration failed";
+      errorMessageElement.hidden = false;
     }
   };
 
@@ -82,6 +90,10 @@ const Register = ({ onRouteChange, loadUser }) => {
                 value="Register"
               />
             </div>
+          </div>
+          {/* Add error element display here if needed */}
+          <div id="error-message" className="mt3 red" hidden>
+            <p id="error-text"></p>
           </div>
         </main>
       </article>

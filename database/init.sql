@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    enteries BIGINT DEFAULT 0,
+    entries BIGINT DEFAULT 0,
     joined TIMESTAMP NOT NULL
 );
 
