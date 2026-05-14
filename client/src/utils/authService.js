@@ -18,6 +18,16 @@ export const signInUser = async (email, password) => {
 };
 
 export const registerUser = async (name, email, password) => {
+  //validate email format and password strength on client side before sending request
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    throw new Error("Invalid email format");
+  }
+
+  if (password.length < 6) {
+    throw new Error("Password must be at least 6 characters long");
+  }
+
   const response = await fetch(`${API_URL}/users/register`, {
     method: "POST",
     headers: {

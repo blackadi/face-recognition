@@ -2,6 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Register from "../components/Register/Register";
 import { useUser } from "../hooks/useUser";
+import { registerUser } from "../utils/authService";
+
+const validateRegister = ({ name, email, password }) => {
+  if (!name || !email || !password) {
+    return "Name, email, and password are required.";
+  }
+  if (password.length < 6) {
+    return "Password must be at least 6 characters.";
+  }
+  return null;
+};
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -16,23 +27,34 @@ export default function RegisterPage() {
     }
   };
 
-  const handleLoadUser = (user) => {
-    if (user && user.id) {
-      loadUser(user);
-      handleRouteChange("home");
-    } else {
-      setError("Registration failed");
+  const handleRegister = async ({ name, email, password }) => {
+    const validationError = validateRegister({ name, email, password });
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    try {
+      const user = await registerUser(name, email, password);
+      if (user && user.id) {
+        loadUser(user);
+        setError(null);
+        handleRouteChange("home");
+      } else {
+        setError("Registration failed. Please try again.");
+      }
+    } catch (err) {
+      setError(err.message || "Registration failed. Please try again.");
     }
   };
 
   return (
     <div>
-      <Register onRouteChange={handleRouteChange} loadUser={handleLoadUser} />
-      {error && (
-        <div className="ma3 pa3 bg-red white br2 tc">
-          <p>{error}</p>
-        </div>
-      )}
+      <Register
+        onRouteChange={handleRouteChange}
+        onSubmit={handleRegister}
+        error={error}
+      />
     </div>
   );
 }

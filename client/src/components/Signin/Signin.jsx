@@ -1,94 +1,81 @@
-import { useState } from "react";
+import { useForm } from "../../hooks/useForm";
 
-const Signin = ({ onRouteChange, loadUser }) => {
-  const [signInEmail, setSignInEmail] = useState("");
-  const [signInPassword, setSignInPassword] = useState("");
+const Signin = ({ onRouteChange, onSubmit, error }) => {
+  const { values, handleChange } = useForm({
+    email: "",
+    password: "",
+  });
 
-  const onEmailChange = (event) => setSignInEmail(event.target.value);
-
-  const onPasswordChange = (event) => setSignInPassword(event.target.value);
-
-  const onSubmitSignIn = async () => {
-    const response = await fetch("http://localhost:3000/api/v1/users/signin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: signInEmail,
-        password: signInPassword,
-      }),
-    });
-    const user = await response.json();
-
-    if (user.id) {
-      loadUser(user);
-      onRouteChange("home");
-    } else {
-      // Display error message
-      const errorMessageElement = document.getElementById("error-message");
-      const errorTextElement = document.getElementById("error-text");
-      errorTextElement.textContent = "Invalid email or password";
-      errorMessageElement.hidden = false;
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSubmit({ email: values.email.trim(), password: values.password });
   };
 
   return (
-    <>
-      <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
-        <main className="pa4 black-80">
-          <div className="measure">
-            <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-              <legend className="f1 fw6 ph0 mh0">Sign In</legend>
-              <div className="mt3">
-                <label className="db fw6 lh-copy f6" htmlFor="email-address">
-                  Email
-                </label>
-                <input
-                  className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                  type="email"
-                  name="email-address"
-                  id="email-address"
-                  onChange={onEmailChange}
-                />
-              </div>
-              <div className="mv3">
-                <label className="db fw6 lh-copy f6" htmlFor="password">
-                  Password
-                </label>
-                <input
-                  className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
-                  type="password"
-                  name="password"
-                  id="password"
-                  onChange={onPasswordChange}
-                />
-              </div>
-            </fieldset>
-            <div className="">
+    <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+      <main className="pa4 black-80">
+        <div className="measure">
+          <form
+            id="sign_up"
+            className="ba b--transparent ph0 mh0"
+            onSubmit={handleSubmit}
+          >
+            <legend className="f1 fw6 ph0 mh0">Sign In</legend>
+            <div className="mt3">
+              <label className="db fw6 lh-copy f6" htmlFor="email">
+                Email
+              </label>
               <input
-                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-                onClick={onSubmitSignIn}
-                type="submit"
-                value="Sign in"
+                className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                type="email"
+                name="email"
+                id="email"
+                value={values.email}
+                onChange={handleChange}
+                required
               />
             </div>
-            <div className="lh-copy mt3">
-              <p
-                onClick={() => onRouteChange("register")}
-                className="f6 link dim black db"
-              >
-                Register
-              </p>
+            <div className="mv3">
+              <label className="db fw6 lh-copy f6" htmlFor="password">
+                Password
+              </label>
+              <input
+                className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                type="password"
+                name="password"
+                id="password"
+                value={values.password}
+                onChange={handleChange}
+                required
+                minLength={6}
+              />
             </div>
+            <div className="">
+              <button
+                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                type="submit"
+              >
+                Sign in
+              </button>
+            </div>
+          </form>
+          <div className="lh-copy mt3">
+            <button
+              type="button"
+              onClick={() => onRouteChange("register")}
+              className="f6 link dim black db bg-transparent bn pa0 pointer"
+            >
+              Register
+            </button>
           </div>
-          {/* Add error element display here if needed */}
-          <div id="error-message" className="mt3 red" hidden>
-            <p id="error-text"></p>
-          </div>
-        </main>
-      </article>
-    </>
+          {error && (
+            <div className="mt3 red">
+              <p>{error}</p>
+            </div>
+          )}
+        </div>
+      </main>
+    </article>
   );
 };
 
