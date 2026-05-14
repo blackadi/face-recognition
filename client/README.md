@@ -1,16 +1,56 @@
-# React + Vite
+# Face Recognition Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the React + Vite frontend for the face recognition project.
 
-Currently, two official plugins are available:
+## What it does
+- Allows users to **sign in** and **register**
+- Sends image URLs to the backend for **face detection**
+- Displays face bounding boxes and attributes
+- Updates user **entry counts** on every detection
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Project structure
+- `src/main.jsx` — app entry point
+- `src/config/router.jsx` — React Router route setup
+- `src/layouts/Layout.jsx` — app layout and navigation wrapper
+- `src/context/UserContext.jsx` — global user state
+- `src/pages/` — page components for routes
+- `src/hooks/` — reusable hooks and business logic
+- `src/utils/authService.js` — authentication and user API calls
 
-## React Compiler
+## Run locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```sh
+cd client
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## Build for production
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```sh
+npm run build
+```
+
+## Environment
+
+Edit `client/.env` for frontend configuration. Example values:
+
+```env
+VITE_API_URL=http://localhost:3000/api/v1
+VITE_FACEPLUSPLUS_API_KEY=your_faceplusplus_api_key
+VITE_FACEPLUSPLUS_API_SECRET=your_faceplusplus_api_secret
+```
+
+## Additional docs
+- `PROJECT_STRUCTURE.md` — frontend directory and architecture guide
+- `DEVELOPER_GUIDE.md` — usage patterns and common development tasks
+
+## Notes
+- `App.jsx` is deprecated after routing was added; the app now uses `src/config/router.jsx`.
+- User state is managed with `UserContext` and accessed via `useUser()`.
+- Face detection logic is extracted into `src/hooks/useFaceDetection.js`.
+
+## Related repositories
+- Backend API lives in `../face_api`
+- Database setup lives in `../database`
+
